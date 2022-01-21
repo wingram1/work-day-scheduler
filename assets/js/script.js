@@ -1,9 +1,6 @@
 /////////////////////// variables
-var now = moment();
 var saveBtn = document.querySelector(".saveBtn");
 var updateInterval = 1 * (60 * 1000); //1 minute
-var currentTime = now.hour();
-var inputActive = false;
 
 var emptyTimeBlockArray = [
     {
@@ -52,8 +49,8 @@ var getCurrentDate = function() {
     var weekday = ""
     var month = ""
 
-    // cnovert weekday value to string
-    switch (now.isoWeekday()) {
+    // convert weekday value to string
+    switch (moment().isoWeekday()) {
         case 1: 
             weekday = "Monday";
             break;
@@ -78,7 +75,7 @@ var getCurrentDate = function() {
     };
 
     // convert month value to string
-    switch (now.month()) {
+    switch (moment().month()) {
         case 0:
             month = "January";
             break;
@@ -118,7 +115,7 @@ var getCurrentDate = function() {
     }
 
     //get ending for date number and update HTML
-    var dateNumber = now.date();
+    var dateNumber = moment().date();
 
     if (dateNumber === 3 || dateNumber === 23) {
         dateDisplay.textContent = (weekday + ", " + month + " " + dateNumber + "rd");
@@ -135,9 +132,9 @@ var getCurrentDate = function() {
 };
 
 
-// TODO: Use moment to get time; check time of block in a for loop and change color accordingly
+// Use moment to get time; check time of block in a for loop and change color accordingly
 var updateTimeBlocks = function(){
-    currentTime = now.hour();
+    var currentTime = moment().hour();
 
     //update time blocks
     for (let i=0; i<9; i++) {
