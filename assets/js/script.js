@@ -1,9 +1,15 @@
 /////////////////////// variables
 var now = moment();
+var saveBtn = document.querySelector(".saveBtn");
+var updateInterval = 10 * (60 * 1000) //10 minutes
+var currentTime = null
+
 
 
 // TODO: create timeblocks
+var generateTimeBlocks = function() {
 
+};
 
 
 
@@ -18,7 +24,7 @@ var getCurrentDate = function() {
     var weekday = ""
     var month = ""
 
-    // get weekday
+    // cnovert weekday value to string
     switch (now.isoWeekday()) {
         case 1: 
             weekday = "Monday";
@@ -43,7 +49,7 @@ var getCurrentDate = function() {
             break;
     };
 
-    // get month
+    // convert month value to string
     switch (now.month()) {
         case 0:
             month = "January";
@@ -83,6 +89,7 @@ var getCurrentDate = function() {
             break;
     }
 
+    //get ending for date number and update HTML
     var dateNumber = now.date();
     if (dateNumber === 3 || dateNumber === 23) {
         dateDisplay.textContent = (weekday + ", " + month + " " + dateNumber + "rd");
@@ -98,17 +105,41 @@ var getCurrentDate = function() {
     }
 };
 
-getCurrentDate();
-
-
-
-
 
 // TODO: Use moment to get time; check time of each container in a for loop and change color accordingly
+var getCurrentTime = function(){
+    console.log("getCurrentTime() is being read");
 
 
+};
 
+var setUpdateTimer = function(){
+    setInterval(function() {
+        console.log("interval passed, update should take place");
+
+        //update header html with date
+        getCurrentDate();
+
+        //update color classes of time blocks
+        getCurrentTime();
+    }, updateInterval);
+}
 
 
 // TODO: Add save button functionality; when click saveBtn, update localStorage
 
+
+
+// TODO: Add function to update page every 10 minutes, call header and body functions
+
+
+
+
+
+///////////call functions///////////
+//TODO: loadTasks();
+getCurrentDate();
+getCurrentTime();
+//TODO: saveBtn.addEventListener("click", saveTask);
+
+//TODO: setUpdateTimer(); //DONE but not gonna call yet
