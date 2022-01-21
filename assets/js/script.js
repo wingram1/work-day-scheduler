@@ -155,7 +155,6 @@ var updateTimeBlocks = function(){
 
 var setUpdateTimer = function(){
     setInterval(function() {
-        console.log("interval passed! update should take place");
 
         //update header html with date
         getCurrentDate();
@@ -164,7 +163,6 @@ var setUpdateTimer = function(){
         updateTimeBlocks();
     }, updateInterval);
 }
-
 
 $(".saveBtn").click(function() {
 
@@ -183,11 +181,9 @@ $(".saveBtn").click(function() {
     
     //set timeblocks[i].value to equal the input value
     timeblocks[workingIndex].value = inputValue;
-    console.log(timeblocks);
 
     //save to localStorage
     localStorage.setItem("timeblocks", JSON.stringify(timeblocks));
-
 });
 
 var loadTimeBlocks = function() {
@@ -200,8 +196,6 @@ var loadTimeBlocks = function() {
     } else {
         timeblocks = JSON.parse(timeblocks);
     }
-
-    console.log("Time blocks: "+ timeblocks);
 
     //make value of each block id = timeblocks[i].value
     for (let i=0; i < timeblocks.length; i++) {
