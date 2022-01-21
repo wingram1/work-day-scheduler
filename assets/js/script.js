@@ -1,11 +1,48 @@
 /////////////////////// variables
 var now = moment();
 var saveBtn = document.querySelector(".saveBtn");
-var updateInterval = 10 * (60 * 1000) //10 minutes
+var updateInterval = 1 * (60 * 1000); //1 minute
 var currentTime = now.hour();
+var inputActive = false;
 
-
-// TODO: Function to update date at top of page (id=#currentDay)
+var emptyTimeBlockArray = [
+    {
+        id: "h9-block",
+        value: ""
+    },
+    {
+        id: "h10-block",
+        value: ""
+    },
+    {
+        id: "h11-block",
+        value: ""
+    },
+    {
+        id: "h12-block",
+        value: ""
+    },
+    {
+        id: "h13-block",
+        value: ""
+    },
+    {
+        id: "h14-block",
+        value: ""
+    },
+    {
+        id: "h15-block",
+        value: ""
+    },    
+    {
+        id: "h16-block",
+        value: ""
+    },    
+    {
+        id: "h17-block",
+        value: ""
+    }
+];
 
 var getCurrentDate = function() {
     //clear text content
@@ -82,6 +119,7 @@ var getCurrentDate = function() {
 
     //get ending for date number and update HTML
     var dateNumber = now.date();
+
     if (dateNumber === 3 || dateNumber === 23) {
         dateDisplay.textContent = (weekday + ", " + month + " " + dateNumber + "rd");
     } 
@@ -99,8 +137,6 @@ var getCurrentDate = function() {
 
 // TODO: Use moment to get time; check time of block in a for loop and change color accordingly
 var updateTimeBlocks = function(){
-    console.log("getCurrentTime() is being read");
-
     currentTime = now.hour();
 
     //update time blocks
@@ -122,30 +158,68 @@ var updateTimeBlocks = function(){
 
 var setUpdateTimer = function(){
     setInterval(function() {
-        console.log("interval passed, update should take place");
+        console.log("interval passed! update should take place");
 
         //update header html with date
         getCurrentDate();
 
         //update color classes of time blocks
-        // updateTimeBlocks(); TODO: un-comment me when done with function
+        updateTimeBlocks();
     }, updateInterval);
 }
 
 
-// TODO: Add save button functionality; when click saveBtn, update localStorage
+$(".saveBtn").click(function() {
+
+    //gets value of sibling input
+    var inputId = $(this).siblings("input").attr("id");
+    var inputValue = $(this).siblings("input").val();
+    var workingIndex = null;
+
+    //loop through array to find id match, get working index
+    for (let i=0; i < timeblocks.length; i++) { 
+        if (timeblocks[i].id === inputId) {
+            workingIndex = i;
+            break;
+        }
+    }
+    
+    //set timeblocks[i].value to equal the input value
+    timeblocks[workingIndex].value = inputValue;
+    console.log(timeblocks);
+
+    //save to localStorage
+    localStorage.setItem("timeblocks", JSON.stringify(timeblocks));
+
+});
+
+var loadTimeBlocks = function() {
+    //get array from local storage
+    timeblocks = localStorage.getItem("timeblocks");
+
+    //check if existing; if not, set to equal emptyTimeBlockArray
+    if (timeblocks === null) {
+        timeblocks = emptyTimeBlockArray;
+    } else {
+        timeblocks = JSON.parse(timeblocks);
+    }
+
+    console.log("Time blocks: "+ timeblocks);
+
+    //make value of each block id = timeblocks[i].value
+    for (let i=0; i < timeblocks.length; i++) {
+        var tempInput = document.querySelector("#h" + (i+9) + "-block");
+
+        tempInput.value = timeblocks[i].value;
+    }
+};
 
 
 
-
-
-
-///////////call functions///////////
-//TODO: loadTasks();
+///////////call functions//////////
+loadTimeBlocks();
 
 getCurrentDate();
 updateTimeBlocks();
-
-//TODO: saveBtn.addEventListener("click", saveTask);
 
 setUpdateTimer();
