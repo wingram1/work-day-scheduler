@@ -3,14 +3,8 @@ var now = moment();
 var saveBtn = document.querySelector(".saveBtn");
 var updateInterval = 10 * (60 * 1000) //10 minutes
 var currentTime = now.hour();
-var timeBlocksArray = [
-    {
-        id: "9AMcontainer",
-        class: "time-block row",
 
-    },
 
-]
 // TODO: Function to update date at top of page (id=#currentDay)
 
 var getCurrentDate = function() {
@@ -103,14 +97,26 @@ var getCurrentDate = function() {
 };
 
 
-// TODO: Use moment to get time; check time of each container in a for loop and change color accordingly
+// TODO: Use moment to get time; check time of block in a for loop and change color accordingly
 var updateTimeBlocks = function(){
     console.log("getCurrentTime() is being read");
 
     currentTime = now.hour();
 
-    //update timeBlocks
-    
+    //update time blocks
+    for (let i=0; i<9; i++) {
+        var workingBlock = $("#h" + (i+9) + "-block");
+
+        //if earlier, set class to .past; else if's for present and future 
+        if ((i+9) < currentTime) {
+            $(workingBlock).addClass("past");
+        }
+        else if ((i+9) === currentTime) {
+            $(workingBlock).addClass("present");
+        }
+        else if ((i+9) > currentTime) {
+            $(workingBlock).addClass("future");
+        }
     }
 };
 
@@ -122,7 +128,7 @@ var setUpdateTimer = function(){
         getCurrentDate();
 
         //update color classes of time blocks
-        updateTimeBlocks();
+        // updateTimeBlocks(); TODO: un-comment me when done with function
     }, updateInterval);
 }
 
@@ -131,16 +137,15 @@ var setUpdateTimer = function(){
 
 
 
-// TODO: Add function to update page every 10 minutes, call header and body functions
-
-
 
 
 
 ///////////call functions///////////
 //TODO: loadTasks();
+
 getCurrentDate();
-getCurrentTime();
+updateTimeBlocks();
+
 //TODO: saveBtn.addEventListener("click", saveTask);
 
-//TODO: setUpdateTimer(); //DONE but not gonna call yet
+setUpdateTimer();
