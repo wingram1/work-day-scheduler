@@ -2,18 +2,15 @@
 var now = moment();
 var saveBtn = document.querySelector(".saveBtn");
 var updateInterval = 10 * (60 * 1000) //10 minutes
-var currentTime = null
+var currentTime = now.hour();
+var timeBlocksArray = [
+    {
+        id: "9AMcontainer",
+        class: "time-block row",
 
+    },
 
-
-// TODO: create timeblocks
-var generateTimeBlocks = function() {
-
-};
-
-
-
-
+]
 // TODO: Function to update date at top of page (id=#currentDay)
 
 var getCurrentDate = function() {
@@ -107,10 +104,14 @@ var getCurrentDate = function() {
 
 
 // TODO: Use moment to get time; check time of each container in a for loop and change color accordingly
-var getCurrentTime = function(){
+var updateTimeBlocks = function(){
     console.log("getCurrentTime() is being read");
 
+    currentTime = now.hour();
 
+    //update timeBlocks
+    
+    }
 };
 
 var setUpdateTimer = function(){
@@ -121,7 +122,7 @@ var setUpdateTimer = function(){
         getCurrentDate();
 
         //update color classes of time blocks
-        getCurrentTime();
+        updateTimeBlocks();
     }, updateInterval);
 }
 
